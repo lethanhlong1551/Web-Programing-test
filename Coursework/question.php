@@ -1,12 +1,15 @@
 <?php
 try{
     include 'include/DatabaseConnection.php';
+    include 'include/DatabaseFunctions.php';
 
-    $sql = 'SELECT question.id, question.text, question.date, question.image, author.name, author.email FROM question 
-            INNER JOIN author ON question.authorid = author.id 
+    $sql = 'SELECT question.id, question.text, question.date, question.image, user.name, user.email, moduleName FROM question 
+            INNER JOIN user ON question.userid = user.id
+            INNER JOIN module ON question.moduleid = module.id
             ORDER BY question.id DESC';
     $questions = $pdo->query($sql);
     $title = 'Question';
+    $totalQuestions = totalQuestions($pdo);
 
     ob_start();
     include 'templates/question.html.php';

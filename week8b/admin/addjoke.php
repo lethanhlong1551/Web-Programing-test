@@ -1,12 +1,13 @@
 <?php
-require 'include/DatabaseConnection.php';
+include '../include/DatabaseConnection.php';
+include '../include/DatabaseFunctions.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $questiontext = trim($_POST['questiontext'] ?? '');
-    $moduleid = $_POST['moduleid'] ?? '';
-    $userid = $_POST['userid'] ?? '';
-    if ($questiontext === '' || $moduleid === '' || $userid === '') {
-        die('Question text, user, and module are required.');
+    $joketext = trim($_POST['joketext'] ?? '');
+    $categoryid = $_POST['categoryid'] ?? '';
+    $authorid = $_POST['authorid'] ?? '';
+    if ($joketext === '' || $categoryid === '' || $authorid === '') {
+        die('Joke text, author, and category are required.');
     }
 
     $imageName = null;
@@ -35,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $ext = $allowed[$mime];
         $imageName = bin2hex(random_bytes(8)) . '.' . $ext;
 
-        $uploadDir = __DIR__ . '/image';
+        $uploadDir = __DIR__ . '/images';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
@@ -46,24 +47,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    $sql = 'INSERT INTO question (text, date, image, userid, moduleid) VALUES (:questiontext, CURDATE(), :image, :userid, :moduleid)';
+    if (!file_exists($destination)) {
+        die('Upload failed: file not saved.');
+    }
+
+    $sql = 'INSERT INTO joke (joketext, jokedate, Image, authorid, categoryid) VALUES (:joketext, CURDATE(), :image, :authorid, :categoryid)';
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
-        ':questiontext' => $questiontext,
+        ':joketext' => $joketext,
         ':image' => $imageName,
-        ':userid' => $userid,
-        ':moduleid' => $moduleid
+        ':authorid' => $authorid,
+        ':categoryid' => $categoryid
     ]);
 
-    header('Location: question.php');
+    header('Location: jokes.php');
     exit;
 } else {
-    $modules = $pdo->query('SELECT id, moduleName FROM module')->fetchAll();
-    $users = $pdo->query('SELECT id, name, email FROM user')->fetchAll();
-    $title = 'Add a new Question';
+    /*$categories = $pdo->query('SELECT id, categoryName FROM category')->fetchAll();*/
+    /*$authors = $pdo->query('SELECT id, name, email FROM author')->fetchAll();*/
+    $authors = allAuthors($pdo);
+    $categories = allCategories($pdo);
+    $title = 'Add a new Joke';
     ob_start();
-    include 'templates/addquestion.html.php';
+    include '../templates/addjoke.html.php';
     $output = ob_get_clean();
-    include 'templates/layout.html.php';
+    include '../templates_admin/admin_layout.html.php';
 }
 ?>
