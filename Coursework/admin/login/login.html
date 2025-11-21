@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="../../question.css">
+</head>
+<body id="admin">
+    <header>
+        <h1>Student forum &mdash; Admin Login</h1>
+        <nav>
+            <ul>
+                <li><a href="../../index.php">Home</a></li>
+                <li><a href="../../question.php">Question</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <p>Please enter the admin password to access secure pages.</p>
+        <form method="POST" action="Validate.php">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" size="20" required>
+            <p>Hint: password = secret</p>
+            <input type="submit" value="Submit">
+        </form>
+    </main>
+    <footer>&copy; Question Management System</footer>
+</body>
+</html>

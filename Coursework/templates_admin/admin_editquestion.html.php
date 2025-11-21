@@ -19,7 +19,7 @@
         <option value="">Select a module</option>
         <?php foreach ($modules as $module): ?>
             <option value="<?= htmlspecialchars($module['id']) ?>" <?= $module['id'] == $question['moduleid'] ? 'selected' : '' ?>>
-                <?= htmlspecialchars($module['name']) ?>
+                <?= htmlspecialchars($module['moduleName']) ?>
             </option>
         <?php endforeach; ?>
     </select>
@@ -27,7 +27,7 @@
     <label>Current Image:</label>
     <?php if (!empty($question['image'])): ?>
         <div>
-            <img src="image/<?= htmlspecialchars($question['image']) ?>" alt="Question Image" style="max-width:150px;">
+            <img src="../image/<?= htmlspecialchars($question['image']) ?>" alt="Question Image" style="max-width:150px;">
         </div>
     <?php else: ?>
         <div>No image</div>

@@ -1,6 +1,6 @@
 <?php
-require 'include/DatabaseConnection.php';
-require 'include/DatabaseFunctions.php';
+require '../include/DatabaseConnection.php';
+require '../include/DatabaseFunctions.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $questiontext = trim($_POST['questiontext'] ?? '');
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $ext = $allowed[$mime];
         $imageName = bin2hex(random_bytes(8)) . '.' . $ext;
 
-        $uploadDir = __DIR__ . '/image';
+        $uploadDir = __DIR__ . '../../image';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
@@ -65,8 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $users = allUsers($pdo);
     $title = 'Add a new Question';
     ob_start();
-    include 'templates/addquestion.html.php';
+    include '../templates_admin/admin_addquestion.html.php';
     $output = ob_get_clean();
-    include 'templates/layout.html.php';
+    include '../templates_admin/admin_layout.html.php';
 }
 ?>

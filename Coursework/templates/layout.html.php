@@ -13,6 +13,8 @@
             <li><a href="index.php">Home</a></li>
             <li><a href="question.php">Question List</a></li>
             <li><a href="addquestion.php">Add a new Question</a></li>
+            <!-- <li><a href="admin/question.php">Admin</a></li> -->
+            <li><a href="admin/login/login.html">Admin Login</a></li>
         </ul>
     </nav>
     <main>

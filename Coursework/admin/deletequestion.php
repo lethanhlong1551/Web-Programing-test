@@ -1,7 +1,7 @@
 <?php
 try{
-    include 'include/DatabaseConnection.php';
-    include 'include/DatabaseFunctions.php';
+    include '../include/DatabaseConnection.php';
+    include '../include/DatabaseFunctions.php';
 
     /*$sql = 'DELETE FROM question WHERE id = :id';
     $stmt = $pdo->prepare($sql);

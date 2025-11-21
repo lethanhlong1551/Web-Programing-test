@@ -1,6 +1,6 @@
 <?php
-include 'include/DatabaseConnection.php';
-include 'include/DatabaseFunctions.php';
+include '../include/DatabaseConnection.php';
+include '../include/DatabaseFunctions.php';
 try {
     if (isset($_POST['questiontext'])) {
         /*$sql = 'UPDATE question SET questiontext = :questiontext, userid = :userid, moduleid = :moduleid WHERE id = :id';
@@ -35,7 +35,7 @@ try {
             $ext = $allowed[$mime];
             $imageName = bin2hex(random_bytes(8)) . '.' . $ext; // Tên file ngẫu nhiên
 
-            $uploadDir = __DIR__ . '/image'; // Thư mục lưu ảnh
+            $uploadDir = __DIR__ . '../../image'; // Thư mục lưu ảnh
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
@@ -65,11 +65,11 @@ try {
 
         $title = 'Edit Question';
         ob_start();
-        include 'templates/editquestion.html.php';
+        include '../templates_admin/admin_editquestion.html.php';
         $output = ob_get_clean();
     }
 } catch (PDOException $e) {
     $title = 'An error has occurred';
     $output = 'Error editing question: ' . $e->getMessage();
 }
-include 'templates/layout.html.php';
+include '../templates_admin/admin_layout.html.php';
