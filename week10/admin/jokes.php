@@ -3,6 +3,7 @@ try{
     include '../include/DatabaseConnection.php';
     include '../include/DatabaseFunctions.php';
 
+    require "login/check.php";
     $sql = 'SELECT joke.id, joketext, jokedate, Image, author.name, author.email, categoryName FROM joke 
             INNER JOIN author ON joke.authorid = author.id
             INNER JOIN category ON joke.categoryid = category.id

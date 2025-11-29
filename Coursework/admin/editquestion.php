@@ -3,15 +3,28 @@ include '../include/DatabaseConnection.php';
 include '../include/DatabaseFunctions.php';
 try {
     if (isset($_POST['questiontext'])) {
-        /*$sql = 'UPDATE question SET questiontext = :questiontext, userid = :userid, moduleid = :moduleid WHERE id = :id';
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':questiontext', $_POST['questiontext']);
-        $stmt->bindValue(':userid', $_POST['userid']);
-        $stmt->bindValue(':moduleid', $_POST['moduleid']);
-        $stmt->bindValue(':id', $_POST['questionid']);
-        $stmt->execute();*/
         $date = date('Y-m-d');
-        $imageName = null; // Khởi tạo mặc định
+        $imageName = null;
+
+        // Xử lý user
+        if (trim($_POST['newuser'] ?? '') !== '') {
+            $newUserName = trim($_POST['newuser']);
+            $stmt = $pdo->prepare('INSERT INTO user (name) VALUES (:name)');
+            $stmt->execute([':name' => $newUserName]);
+            $userid = $pdo->lastInsertId();
+        } else {
+            $userid = $_POST['userid'] ?? '';
+        }
+
+        // Xử lý module
+        if (trim($_POST['newmodule'] ?? '') !== '') {
+            $newModuleName = trim($_POST['newmodule']);
+            $stmt = $pdo->prepare('INSERT INTO module (moduleName) VALUES (:moduleName)');
+            $stmt->execute([':moduleName' => $newModuleName]);
+            $moduleid = $pdo->lastInsertId();
+        } else {
+            $moduleid = $_POST['moduleid'] ?? '';
+        }
 
         // Xử lý upload ảnh mới
         if (isset($_FILES['image']) && $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
@@ -48,7 +61,7 @@ try {
             $imageName = $_POST['current_image'] ?? null;
         }
 
-        updateQuestion($pdo, $_POST['questionid'], $_POST['questiontext'], $date, $_POST['moduleid'], $_POST['userid'], $imageName);
+        updateQuestion($pdo, $_POST['questionid'], $_POST['questiontext'], $date, $moduleid, $userid, $imageName);
         header('Location: question.php');
         exit;
     } else {

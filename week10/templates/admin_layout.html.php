@@ -15,9 +15,6 @@
         <ul>
             <li><a href="jokes.php">Joke List</a></li>
             <li><a href="addjoke.php">Add a new joke</a></li>
-            <li><a href="../index.php">Public Site</a></li>
+            <li><a href="login/logout.php">Public Site/Logout</a></li>
         </ul>
     </nav>
-    <main>
-        <?=$output?>
-    </main>

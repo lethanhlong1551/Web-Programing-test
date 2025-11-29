@@ -1,4 +1,4 @@
 <body>
 not authorised go to
-<a href="login.html">login</a>
+<a href="../../templates/login.html.php">login</a>
 </body>

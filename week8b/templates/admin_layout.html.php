@@ -18,6 +18,3 @@
             <li><a href="../index.php">Public Site</a></li>
         </ul>
     </nav>
-    <main>
-        <?=$output?>
-    </main>

@@ -4,10 +4,31 @@ require 'include/DatabaseFunctions.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $questiontext = trim($_POST['questiontext'] ?? '');
-    $moduleid = $_POST['moduleid'] ?? '';
-    $userid = $_POST['userid'] ?? '';
+
+    // Xử lý user
+    if (trim($_POST['newuser'] ?? '') !== '') {
+        $newUserName = trim($_POST['newuser']);
+        // Thêm user mới vào bảng user
+        $stmt = $pdo->prepare('INSERT INTO user (name) VALUES (:name)');
+        $stmt->execute([':name' => $newUserName]);
+        // Lấy id vừa thêm
+        $userid = $pdo->lastInsertId();
+    } else {
+        $userid = $_POST['userid'] ?? '';
+    }
+
+    // Xử lý module
+    if (trim($_POST['newmodule'] ?? '') !== '') {
+        $newModuleName = trim($_POST['newmodule']);
+        $stmt = $pdo->prepare('INSERT INTO module (moduleName) VALUES (:moduleName)');
+        $stmt->execute([':moduleName' => $newModuleName]);
+        $moduleid = $pdo->lastInsertId();
+    } else {
+        $moduleid = $_POST['moduleid'] ?? '';
+    }
+
     if ($questiontext === '' || $moduleid === '' || $userid === '') {
-        die('Question text, user, and module are required.');
+        die('Type your question here, type your user here, and type your module here are required.');
     }
 
     $imageName = null;

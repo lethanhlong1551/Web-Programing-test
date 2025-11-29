@@ -1,6 +1,6 @@
 <?php
-include '../include/DatabaseConnection.php';
-include '../include/DatabaseFunctions.php';
+include 'include/DatabaseConnection.php';
+include 'include/DatabaseFunctions.php';
 
 try {
     if (isset($_POST['joketext'])) {
@@ -50,11 +50,11 @@ try {
 
         $title = 'Edit Joke';
         ob_start();
-        include '../templates_admin/admin_editjoke.html.php';
+        include 'templates/editjoke.html.php';
         $output = ob_get_clean();
     }
 } catch (PDOException $e) {
     $title = 'An error has occurred';
     $output = 'Error editing joke: ' . $e->getMessage();
 }
-include '../templates_admin/admin_layout.html.php';
+include 'templates/layout.html.php';

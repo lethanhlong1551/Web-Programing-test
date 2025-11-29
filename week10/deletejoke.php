@@ -1,7 +1,7 @@
 <?php
 try{
-    include '../include/DatabaseConnection.php';
-    include '../include/DatabaseFunctions.php';
+    include 'include/DatabaseConnection.php';
+    include 'include/DatabaseFunctions.php';
 
     /*$sql = 'DELETE FROM joke WHERE id = :id';
     $stmt = $pdo->prepare($sql);
@@ -14,4 +14,4 @@ try{
     $title = 'An error has occurred';
     $output = 'Unable to connect to delete joke: ' . $e->getMessage();
 }
-    include '../templates_admin/admin_layout.html.php';
+    include 'templates/layout.html.php';

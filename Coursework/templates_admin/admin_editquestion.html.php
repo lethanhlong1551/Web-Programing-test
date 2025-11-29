@@ -1,41 +1,33 @@
 <form action="" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="questionid" value="<?= $question['id'] ?>">
-
-    <label for="questiontext">Edit your question here</label>
+    <input type="hidden" name="questionid" value="<?= htmlspecialchars($question['id']) ?>">
+    <label for="questiontext">Type your question here:</label>
     <textarea name="questiontext" id="questiontext" rows="3" cols="40"><?= htmlspecialchars($question['text']) ?></textarea>
 
-    <label for="userid">User:</label>
-    <select name="userid" id="userid" required>
+    <label for="userid">Type your user here:</label>
+    <select name="userid" id="userid">
         <option value="">Select a user</option>
         <?php foreach ($users as $user): ?>
-            <option value="<?= htmlspecialchars($user['id']) ?>" <?= $user['id'] == $question['userid'] ? 'selected' : '' ?>>
+            <option value="<?= htmlspecialchars($user['id']) ?>" <?= $question['userid'] == $user['id'] ? 'selected' : '' ?>>
                 <?= htmlspecialchars($user['name']) ?>
             </option>
         <?php endforeach; ?>
     </select>
+    <input type="text" name="newuser" id="newuser" placeholder="Type your user here">
 
-    <label for="moduleid">Module:</label>
-    <select name="moduleid" id="moduleid" required>
+    <label for="moduleid">Type your module here:</label>
+    <select name="moduleid" id="moduleid">
         <option value="">Select a module</option>
         <?php foreach ($modules as $module): ?>
-            <option value="<?= htmlspecialchars($module['id']) ?>" <?= $module['id'] == $question['moduleid'] ? 'selected' : '' ?>>
+            <option value="<?= htmlspecialchars($module['id']) ?>" <?= $question['moduleid'] == $module['id'] ? 'selected' : '' ?>>
                 <?= htmlspecialchars($module['moduleName']) ?>
             </option>
         <?php endforeach; ?>
     </select>
+    <input type="text" name="newmodule" id="newmodule" placeholder="Type your module here">
 
-    <label>Current Image:</label>
-    <?php if (!empty($question['image'])): ?>
-        <div>
-            <img src="../image/<?= htmlspecialchars($question['image']) ?>" alt="Question Image" style="max-width:150px;">
-        </div>
-    <?php else: ?>
-        <div>No image</div>
-    <?php endif; ?>
-
-    <label for="image">Change Image (optional):</label>
+    <label for="image">Image (optional):</label>
     <input type="file" name="image" id="image" accept="image/*">
     <input type="hidden" name="current_image" value="<?= htmlspecialchars($question['image']) ?>">
 
-    <input type="submit" name="submit" value="Save">
+    <input type="submit" value="Update">
 </form>

@@ -1,6 +1,6 @@
 <?php
-include '../include/DatabaseConnection.php';
-include '../include/DatabaseFunctions.php';
+include 'include/DatabaseConnection.php';
+include 'include/DatabaseFunctions.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $joketext = trim($_POST['joketext'] ?? '');
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $ext = $allowed[$mime];
         $imageName = bin2hex(random_bytes(8)) . '.' . $ext;
 
-        $uploadDir = __DIR__ . '/images';
+        $uploadDir = __DIR__ . '/image';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
@@ -45,10 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
             die('Failed to move uploaded image.');
         }
-    }
-
-    if (!file_exists($destination)) {
-        die('Upload failed: file not saved.');
     }
 
     $sql = 'INSERT INTO joke (joketext, jokedate, Image, authorid, categoryid) VALUES (:joketext, CURDATE(), :image, :authorid, :categoryid)';
@@ -69,8 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $categories = allCategories($pdo);
     $title = 'Add a new Joke';
     ob_start();
-    include '../templates_admin/admin_addjoke.html.php';
+    include 'templates/addjoke.html.php';
     $output = ob_get_clean();
-    include '../templates_admin/admin_layout.html.php';
+    include 'templates/layout.html.php';
 }
 ?>
